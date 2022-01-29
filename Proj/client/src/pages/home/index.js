@@ -7,7 +7,8 @@ class Home extends Component {
 	state = {
 
 	// Initially, no file is selected
-	selectedFile: null
+	selectedFile: null,
+    data = null
 	};
 	
 	// On file select (from the pop up)
@@ -19,6 +20,7 @@ class Home extends Component {
     reader.onload = function(event) {
     // The file's text will be printed here
     console.log(event.target.result)
+    this.setState({ data: event.target.result})
     };
 
     reader.readAsText(event.target.files[0]);
@@ -39,6 +41,7 @@ class Home extends Component {
 	
 	// Details of the uploaded file
 	console.log(this.state.selectedFile);
+    console.log(this.state.data);
 	
 	// Request made to the backend api
 	// Send formData object
