@@ -8,22 +8,24 @@ class Home extends Component {
 
 	// Initially, no file is selected
 	selectedFile: null,
-    data = null
+    data : null
 	};
 	
 	// On file select (from the pop up)
 	onFileChange = event => {
 	
 	// Update the state
-	this.setState({ selectedFile: event.target.files[0] });
-	var reader = new FileReader();
-    reader.onload = function(event) {
-    // The file's text will be printed here
-    console.log(event.target.result)
-    this.setState({ data: event.target.result})
-    };
+		this.setState({ selectedFile: event.target.files[0] });
+		var reader = new FileReader();
+		reader.onload = (event)=> {
+			
+		// The file's text will be printed here
+			// console.log(event.target.result)
+			
+			this.setState({ data: event.target.result})
+		};
 
-    reader.readAsText(event.target.files[0]);
+		reader.readAsText(event.target.files[0]);
 	};
 	
 	// On file upload (click the upload button)
