@@ -5,6 +5,8 @@ import * as d3 from 'd3'
 import BarChart from '../../components/BarChart'
 import Average from '../../components/Average'
 import Papa from "papaparse";
+import barimg from "./static/import.png"
+import Draggable from 'react-draggable';
 
 const data = [
   {year: 1980, efficiency: 24.3, sales: 8949000},
@@ -42,13 +44,23 @@ const data = [
 
 
 class Home extends Component {
-	
+	constructor(props) {
+		super(props);
+		this.myRef = React.createRef();
+		
+	}
+
 	state = {
 
 	// Initially, no file is selected
 	selectedFile: null,
     data : null,
-	parsedCsvData : null
+	parsedCsvData : null,
+	numbar : null,
+	numavg:null,
+	drawing :false,
+	order:[],
+	inexecute:false
 	};
 	
 	// useData = () => {
@@ -74,7 +86,9 @@ class Home extends Component {
 	// 	console.log(d1)
 	// }
 	
-    
+    // componentDidMount = ()=>{
+	// 	var nodeval = this.myRef.current.value
+	// 	}
 	// On file select (from the pop up)
 	onFileChange = event => {
 	
@@ -113,7 +127,7 @@ class Home extends Component {
 		  });
 	};
 	
-
+	
 	
 	// On file upload (click the upload button)
 	onFileUpload = () => {
@@ -131,7 +145,7 @@ class Home extends Component {
 	// Details of the uploaded file
 	console.log(this.state.selectedFile);
     console.log(this.state.data);
-	
+	this.setState({inexecute:true})
 	// Request made to the backend api
 	// Send formData object
 	axios.post("api/uploadfile", formData);
@@ -148,13 +162,13 @@ class Home extends Component {
 		<div>
 			<h2>File Details:</h2>
 			
-<p>File Name: {this.state.selectedFile.name}</p>
+			<p>File Name: {this.state.selectedFile.name}</p>
 
 			
-<p>File Type: {this.state.selectedFile.type}</p>
+			<p>File Type: {this.state.selectedFile.type}</p>
 
 			
-<p>
+			<p>
 			Last Modified:{" "}
 			{this.state.selectedFile.lastModifiedDate.toDateString()}
 			</p>
@@ -170,9 +184,145 @@ class Home extends Component {
 		);
 	}
 	};
+	handleinput = (event)=> {
+		var myval = parseInt(event.target.value)
+		console.log(event.target.getAttribute('name') )
+		if(event.target.getAttribute('name') == "bar"){
+			this.setState({numbar:myval})
+		}
+		else if(event.target.getAttribute('name') == "avg"){
+			this.setState({numavg:myval})
+		}
+		
+	}
+	bar = ()=> {
+		var myarray = Array.apply(null, Array(5)).map(function () {})
+		
+		// myarray.length = 4
+		// console.log(node)
+		// console.log(node.innerHTML)
+		// node.innerHTML += `<Draggable><button id = "bar">BAR!!!</button></Draggable>`
+		return myarray.map((review, index) => (
+			<Draggable disabled={this.state.draw}>
+				<div className="box" key = {index}>
+					<div>Bar!!!!!!</div>
+				</div>
+			</Draggable>
+		))
+      }
+	  drawing = ()=>{
+		  if(this.state.drawing){
+			  this.setState({drawing:false})
+			  console.log(this.state.drawing)
+		  }
+		  else{
+			  this.setState({drawing:true})
+			  console.log(this.state.drawing)
 
-	
-	
+		  }
+	  }
+	  showstate = ()=>{
+		  console.log(this.state.order)
+	  }
+	  handledragclick = (event) =>{
+		console.log(event.target.innerHTML)
+		if(this.state.drawing){
+			if(event.target.innerHTML == "BarChart" || event.target.innerHTML == "Average" ){
+				this.setState({order: this.state.order.concat(event.target.innerHTML) })
+				console.log(event.target.innerHTML)
+				console.log(this.state.order)
+			}
+			
+		}
+	  }
+	  bar1 = ()=> {
+		
+		
+		
+		
+		// console.log(node)
+		// console.log(node.innerHTML)
+		// node.innerHTML += `<Draggable><button id = "bar">BAR!!!</button></Draggable>`
+		if(this.state.numbar){
+			var nodeval = this.state.numbar
+			console.log(this.state.numbar)
+			var myarray = Array.apply(null, Array(this.state.numbar)).map(function () {})
+
+		return myarray.map((review, index) => (
+			<Draggable disabled={this.state.drawing}>
+				<div className="box" id = "bar" key = {index} onClick = {this.handledragclick}>
+					<div>BarChart</div>
+				</div>
+			</Draggable>
+		))
+      }
+	  else{
+		
+		  return <div></div>
+	  }
+	}
+
+	avg = ()=> {
+		
+		
+		
+		
+		// console.log(node)
+		// console.log(node.innerHTML)
+		// node.innerHTML += `<Draggable><button id = "bar">BAR!!!</button></Draggable>`
+		if(this.state.numavg){
+			var nodeval = this.state.numavg
+			console.log(this.state.numavg)
+			var myarray = Array.apply(null, Array(this.state.numavg)).map(function () {})
+
+		var ansarray= myarray.map((review, index) => (
+			<Draggable disabled={this.state.drawing}>
+				<div className="box" id = "bar" key = {index} onClick = {this.handledragclick}>
+					<div>Average</div>
+				</div>
+			</Draggable>
+		))
+		console.log(ansarray)
+		return ansarray
+      }
+	  else{
+		
+		  return <div></div>
+	  }
+	}
+
+	handleexecute = ()=> {
+		if(this.state.inexecute){
+			var order = this.state.order
+			console.log(order)
+
+			// var exectioncode = order.map((executable, index) => (
+			// 	if(executable == "BarChart"){
+			// 		<BarChart data={this.state.parsedCsvData} myx = {0} myy = {1}/>
+			// 	}
+			// 	else{
+
+			// 	}
+			// ))
+			var exarray = []
+			for(var i=0;i<order.length;i++){
+				if(order[i] == "BarChart"){
+					exarray.push(<BarChart data={this.state.parsedCsvData} myx = {0} myy = {1}/>)
+				}
+				else if(order[i] == "Average"){
+					exarray.push(<Average data = {this.state.parsedCsvData} colnum = {0}/>)
+				}
+			}
+			console.log(exarray)
+			return exarray
+      	}
+	  	else{
+		
+		  return <div></div>
+	  }
+	}
+
+
 	render() {
 	if (this.state.parsedCsvData) {
 	return (
@@ -181,13 +331,36 @@ class Home extends Component {
 			PROJECT
 			</h1>
 			<div>
+				<button>BarChart</button>
+				<input type = "text" name = "bar" ref = {this.myRef} onChange = {this.handleinput}></input>
+				<br/>
+				<button>Average</button>
+				<input type = "text"  name = "avg" onChange = {this.handleinput}></input>
+				<button onClick = {this.drawing}>Draw</button>
+				<button onClick = {this.showstate}>showstate</button>
+
+				{/* <button onClick = {avg}>Average</button> */}
+			</div>
+			<div>
+				images and stuffs lol
+				
+			</div>
+			<div className="box">
+				{this.bar1()}
+				{this.avg()}
+			</div>
+			
+			<div>
 				<input type="file" onChange={this.onFileChange} />
 				<button onClick={this.onFileUpload}>
 				Upload!
 				</button>
 			</div>
-			<BarChart data={this.state.parsedCsvData} myx = {0} myy = {1}/>
-			<Average data = {this.state.parsedCsvData} colnum = {0}/>
+			<div>
+				{this.handleexecute()}
+			</div>
+			{/* <BarChart data={this.state.parsedCsvData} myx = {0} myy = {1}/>
+			<Average data = {this.state.parsedCsvData} colnum = {0}/> */}
 			{/* <BarChart data={data} /> */}
 
 		</div>
@@ -199,6 +372,26 @@ class Home extends Component {
 				<h1>
 				PROJECT
 				</h1>
+				<div>
+				<button>BarChart</button>
+				<input type = "text" name = "bar"ref = {this.myref} onChange = {this.handleinput}></input>
+				<br/>
+				<button>Average</button>
+				<input type = "text"  name = "avg" onChange = {this.handleinput}></input>
+				<br/>
+				<button onClick = {this.drawing}>Draw</button>
+				<button onClick = {this.showstate}>Showstate</button>
+
+				{/* <button onClick = {avg}>Average</button> */}
+				</div>
+				<div>
+					images and stuffs lol
+					
+				</div>
+				<div className="box">
+					{this.bar1()}
+					{this.avg()}
+				</div>
 				<div>
 					<input type="file" onChange={this.onFileChange} />
 					<button onClick={this.onFileUpload}>

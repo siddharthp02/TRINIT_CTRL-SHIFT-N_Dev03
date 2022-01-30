@@ -70,6 +70,7 @@ function BarChart({ data,myx,myy }) {
   );
 
   return (
+      
     <svg
       ref={ref}
       style={{
@@ -83,6 +84,7 @@ function BarChart({ data,myx,myy }) {
       <g className="x-axis" />
       <g className="y-axis" />
     </svg>
+    
   );
 }
 
