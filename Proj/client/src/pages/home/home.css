@@ -35,7 +35,7 @@
   /* background-size: cover; */
   }
   
-  h1, h2, h3, h4, h5, h6 { color: #d2d1cb; font-weight: normal; }
+  h1, h2, h3, h4, h5, h6 { color: #f5f5f5; font-weight: normal; }
   h1 { font-size: 250%;padding: 5% 0 }
   h2 { font-size: 150%; margin: 0 0 12%; padding: 5px 0 }
   h3 { font-size: 100%; margin: 0 0 12%; padding: 0; }
@@ -75,11 +75,97 @@
   .box {
     /* position: absolute; */
     cursor: move;
-    color: black;
+    background-color: #060b26;
+    color:#f5f5f5;
     max-width: 215px;
     border-radius: 5px;
     padding: 1em;
     margin: auto;
     user-select: none;
   }
+
+  #notButtons{
+    display:none;
+  }
+
+  #draw{
+    display:none;
+  }
+  #showstate{
+    display:none;
+  }
   
+  #notButtonLabel{
+    margin-left:30px;
+    display:flex;
+    
+  }
+
+  #upload{
+    display:none;
+  }
+
+  .body{
+    height: 100vh;
+    background-color: #060b26;
+    font-size: 1.25em;
+    color:#f5f5f5;
+  }
+  
+  .bodyAfter{
+    margin-top:-35px;
+    font-size: 1em;
+    background-color: #060b26;
+    color:#f5f5f5;
+  }
+
+  #drawLab{
+    display:flex;
+    padding:10px;
+    margin-left:30px;
+  }
+
+  #drawLab:hover{
+    margin-left:30px;
+    background-color: #1a83ff;
+    width: 100px;
+  }
+
+  #showLab{
+    margin-left:30px;
+    display:flex;
+    padding:10px;
+  }
+
+  #showLab:hover{
+    background-color: #1a83ff;
+    width:100px;
+  }
+
+  #uploadLab{
+    margin-left:30px;
+    display:flex;
+    padding:10px;
+  }
+
+  #uploadLab:hover{
+    margin-left:30px;
+    background-color: #1a83ff;
+    width:100px;
+  }
+
+  #execute{
+    display:none;
+  }
+
+  #executeLab{
+    margin-left:30px;
+    display:flex;
+    padding:10px;
+  }
+
+  #executeLab:hover{
+    margin-left:30px;
+    background-color: #1a83ff;
+    width: 100px;
+  }

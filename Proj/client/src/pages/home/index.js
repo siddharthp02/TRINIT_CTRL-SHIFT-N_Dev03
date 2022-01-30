@@ -296,9 +296,6 @@ class Home extends Component {
 
 	avg = ()=> {
 		
-		
-		
-		
 		// console.log(node)
 		// console.log(node.innerHTML)
 		// node.innerHTML += `<Draggable><button id = "bar">BAR!!!</button></Draggable>`
@@ -361,29 +358,34 @@ class Home extends Component {
 	render() {
 	if (this.state.parsedCsvData) {
 	return (
-		<div>
+		<div className = "bodyAfter">
 			<h1>
 			PROJECT
 			</h1>
 			<div>
-				<button>BarChart</button>
+				<button id = "notButtons">BarChart</button>
+				<label htmlFor = "notButtons" id = "notButtonLabel">Bar Chart</label>
 				<input type = "text" name = "bar" ref = {this.myRef} onChange = {this.handleinput}></input>
 				<br/>
-				<button>Average</button>
+				<button id = "notButtons">Average</button>
+				<label htmlFor = "notButtons" id = "notButtonLabel">Average</label>
 				<input type = "text"  name = "avg" onChange = {this.handleinput}></input>
 				<br/>
-				<button>LineChart</button>
+				<button id = "notButtons">LineChart</button>
+				<label htmlFor = "notButtons" id = "notButtonLabel">Line Chart</label>
 				<input type = "text"  name = "line" onChange = {this.handleinput}></input>
-				<button onClick = {this.drawing}>Draw</button>
-				<button onClick = {this.showstate}>showstate</button>
+				<button onClick = {this.drawing} id = "draw">Draw</button>
+				<label htmlFor = "draw" id = "drawLab">Draw</label>
+				<button onClick = {this.showstate} id = "showstate">showstate</button>
+				<label htmlFor = "showstate" id = "showLab">Showstate</label>
 				
 
 				{/* <button onClick = {avg}>Average</button> */}
 			</div>
-			<div>
+			{/* <div>
 				images and stuffs lol
 				
-			</div>
+			</div> */}
 			<div className="box">
 				{this.bar1()}
 				{this.avg()}
@@ -391,10 +393,12 @@ class Home extends Component {
 			</div>
 			
 			<div>
-				<input type="file" onChange={this.onFileChange} />
-				<button onClick={this.onFileUpload}>
+				<input type="file" accept = ".csv" onChange={this.onFileChange} id = "upload"/>
+				<label htmlFor = "upload" id = "uploadLab">Upload</label>
+				<button onClick={this.onFileUpload} id = "execute">
 				Execute!
 				</button>
+				<label htmlFor='execute' id = "executeLab">Execute</label>
 			</div>
 			<div>
 				{this.handleexecute()}
@@ -408,39 +412,46 @@ class Home extends Component {
 	}
 	else{
 		return (
-			<div>
+			<div className='body'>
 				<h1>
 				PROJECT
 				</h1>
 				<div>
-				<button>BarChart</button>
+				<button id = "notButtons">BarChart</button>
+				<label htmlFor = "notButtons" id = "notButtonLabel">Bar Chart</label>
 				<input type = "text" name = "bar"ref = {this.myref} onChange = {this.handleinput}></input>
 				<br/>
-				<button>Average</button>
+				<button id = "notButtons">Average</button>
+				<label htmlFor = "notButtons" id = "notButtonLabel">Average</label>
 				<input type = "text"  name = "avg" onChange = {this.handleinput}></input>
 				<br/>
-				<button>LineChart</button>
+				<button id = "notButtons">LineChart</button>
+				<label htmlFor = "notButtons" id = "notButtonLabel">Line Chart</label>
 				<input type = "text"  name = "line" onChange = {this.handleinput}></input>
 				<br/>
-				<button onClick = {this.drawing}>Draw</button>
-				<button onClick = {this.showstate}>Showstate</button>
+				<button onClick = {this.drawing} id = "draw">Draw</button>
+				<label htmlFor = "draw" id = "drawLab">Draw</label>
+				<button onClick = {this.showstate} id = "showstate">Showstate</button>
+				<label htmlFor = "showstate" id = "showLab">Showstate</label>
 
 				{/* <button onClick = {avg}>Average</button> */}
 				</div>
-				<div>
+				{/* <div>
 					images and stuffs lol
 					
-				</div>
+				</div> */}
 				<div className="box">
 					{this.bar1()}
 					{this.avg()}
 					{this.line()}
 				</div>
 				<div>
-					<input type="file" onChange={this.onFileChange} />
-					<button onClick={this.onFileUpload}>
+					<input type="file" accept = ".csv" onChange={this.onFileChange} id = "upload"/>
+					<label htmlFor = "upload" id = "uploadLab">Upload</label>
+					<button onClick={this.onFileUpload} id = "notButtons">
 					Execute!
 					</button>
+					<label htmlFor='execute' id = "executeLab">Execute</label>
 				</div>
 			</div>
 		);
