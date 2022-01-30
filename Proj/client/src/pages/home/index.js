@@ -4,6 +4,7 @@ import axios from 'axios'
 import * as d3 from 'd3'
 import BarChart from '../../components/BarChart'
 import Average from '../../components/Average'
+import LineChart from '../../components/linechart'
 import Papa from "papaparse";
 import barimg from "./static/import.png"
 import Draggable from 'react-draggable';
@@ -58,6 +59,7 @@ class Home extends Component {
 	parsedCsvData : null,
 	numbar : null,
 	numavg:null,
+	numline:null,
 	drawing :false,
 	order:[],
 	inexecute:false
@@ -193,6 +195,9 @@ class Home extends Component {
 		else if(event.target.getAttribute('name') == "avg"){
 			this.setState({numavg:myval})
 		}
+		else if(event.target.getAttribute('name') == "line"){
+			this.setState({numline:myval})
+		}
 		
 	}
 	bar = ()=> {
@@ -227,7 +232,7 @@ class Home extends Component {
 	  handledragclick = (event) =>{
 		console.log(event.target.innerHTML)
 		if(this.state.drawing){
-			if(event.target.innerHTML == "BarChart" || event.target.innerHTML == "Average" ){
+			if(event.target.innerHTML == "BarChart" || event.target.innerHTML == "Average" || event.target.innerHTML == "LineChart" ){
 				this.setState({order: this.state.order.concat(event.target.innerHTML) })
 				console.log(event.target.innerHTML)
 				console.log(this.state.order)
@@ -250,8 +255,35 @@ class Home extends Component {
 
 		return myarray.map((review, index) => (
 			<Draggable disabled={this.state.drawing}>
-				<div className="box" id = "bar" key = {index} onClick = {this.handledragclick}>
+				<div className="box" id = "line" key = {index} onClick = {this.handledragclick}>
 					<div>BarChart</div>
+				</div>
+			</Draggable>
+		))
+      }
+	  else{
+		
+		  return <div></div>
+	  }
+	}
+
+	line = ()=> {
+		
+		
+		
+		
+		// console.log(node)
+		// console.log(node.innerHTML)
+		// node.innerHTML += `<Draggable><button id = "bar">BAR!!!</button></Draggable>`
+		if(this.state.numline){
+			var nodeval = this.state.numline
+			console.log(this.state.numline)
+			var myarray = Array.apply(null, Array(this.state.numline)).map(function () {})
+
+		return myarray.map((review, index) => (
+			<Draggable disabled={this.state.drawing}>
+				<div className="box" id = "bar" key = {index} onClick = {this.handledragclick}>
+					<div>LineChart</div>
 				</div>
 			</Draggable>
 		))
@@ -312,6 +344,9 @@ class Home extends Component {
 				else if(order[i] == "Average"){
 					exarray.push(<Average data = {this.state.parsedCsvData} colnum = {0}/>)
 				}
+				else if(order[i] == "LineChart"){
+					exarray.push(<LineChart data={data} />)
+				}
 			}
 			console.log(exarray)
 			return exarray
@@ -336,8 +371,12 @@ class Home extends Component {
 				<br/>
 				<button>Average</button>
 				<input type = "text"  name = "avg" onChange = {this.handleinput}></input>
+				<br/>
+				<button>LineChart</button>
+				<input type = "text"  name = "line" onChange = {this.handleinput}></input>
 				<button onClick = {this.drawing}>Draw</button>
 				<button onClick = {this.showstate}>showstate</button>
+				
 
 				{/* <button onClick = {avg}>Average</button> */}
 			</div>
@@ -348,12 +387,13 @@ class Home extends Component {
 			<div className="box">
 				{this.bar1()}
 				{this.avg()}
+				{this.line()}
 			</div>
 			
 			<div>
 				<input type="file" onChange={this.onFileChange} />
 				<button onClick={this.onFileUpload}>
-				Upload!
+				Execute!
 				</button>
 			</div>
 			<div>
@@ -361,7 +401,7 @@ class Home extends Component {
 			</div>
 			{/* <BarChart data={this.state.parsedCsvData} myx = {0} myy = {1}/>
 			<Average data = {this.state.parsedCsvData} colnum = {0}/> */}
-			{/* <BarChart data={data} /> */}
+			
 
 		</div>
 	);
@@ -379,6 +419,9 @@ class Home extends Component {
 				<button>Average</button>
 				<input type = "text"  name = "avg" onChange = {this.handleinput}></input>
 				<br/>
+				<button>LineChart</button>
+				<input type = "text"  name = "line" onChange = {this.handleinput}></input>
+				<br/>
 				<button onClick = {this.drawing}>Draw</button>
 				<button onClick = {this.showstate}>Showstate</button>
 
@@ -391,11 +434,12 @@ class Home extends Component {
 				<div className="box">
 					{this.bar1()}
 					{this.avg()}
+					{this.line()}
 				</div>
 				<div>
 					<input type="file" onChange={this.onFileChange} />
 					<button onClick={this.onFileUpload}>
-					Upload!
+					Execute!
 					</button>
 				</div>
 			</div>
